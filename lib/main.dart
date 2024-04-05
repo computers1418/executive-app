@@ -2,7 +2,6 @@ import 'package:executive_app/constants/text_style.dart';
 import 'package:executive_app/pages/details/details.dart';
 import 'package:executive_app/pages/log-book/log-book.dart';
 import 'package:executive_app/pages/login/login.dart';
-import 'package:executive_app/pages/sending_msg/sending_msg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -85,17 +84,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
            ),
-           InkWell(
-            onTap: () => Navigator.push(context, MaterialPageRoute(
-              builder: (context) => const SendingMSG())),
-            child: Card(
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(10.0),
-                child: const Text("Sending MSG"),
-              ),
-            ),
-           ),
+          //  InkWell(
+          //   onTap: () => Navigator.push(context, MaterialPageRoute(
+          //     builder: (context) => const SendingMSG())),
+          //   child: Card(
+          //     child: Container(
+          //       width: double.infinity,
+          //       padding: const EdgeInsets.all(10.0),
+          //       child: const Text("Sending MSG"),
+          //     ),
+          //   ),
+          //  ),
            InkWell(
             onTap: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) => const LogBook())),

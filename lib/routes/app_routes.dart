@@ -1,8 +1,10 @@
+import 'package:executive_app/bloc/network_bloc.dart';
 import 'package:executive_app/pages/details/details.dart';
 import 'package:executive_app/pages/log-book/log-book.dart';
 import 'package:executive_app/pages/login/login.dart';
 import 'package:executive_app/pages/sending_msg/sending_msg.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Routes {
@@ -29,7 +31,10 @@ class RouteGenerator {
       case Routes.details:
         return getTransistionPage(const DetailsScreen());
       case Routes.templates:
-        return getTransistionPage(const SendingMSG());
+        return getTransistionPage(BlocProvider(
+          create: (context) => NetworkBloc(),
+          child: SendingMSG(data: settings.arguments as Map),
+        ));
       case Routes.logbook:
         return getTransistionPage(const LogBook());
       default:

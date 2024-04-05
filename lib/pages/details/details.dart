@@ -105,6 +105,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                               return null;
                                             },
                                           keyboardType: TextInputType.number,
+                                          controller: numberController,
                                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                           decoration: InputDecoration(
                                             
@@ -152,6 +153,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                 }
                                                 return null;
                                               },
+                                              controller: emailController,
                                               decoration: InputDecoration(
                                                 contentPadding: const EdgeInsets.only(right: 12),
                                                 border: InputBorder.none,
@@ -186,6 +188,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                           child: Image.asset("lib/pages/details/assets/phone.png")),
                                       ),
                                       Expanded(child: TextFormField(
+                                              controller: landlineController,
                                               decoration: InputDecoration(
                                                 contentPadding: const EdgeInsets.only(right: 12),
                                                 border: InputBorder.none,
@@ -195,7 +198,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                 ),
                                               ),
                                             ),
-                                      ),
+                                      ),  
                                     ],
                                   )),
                                   
