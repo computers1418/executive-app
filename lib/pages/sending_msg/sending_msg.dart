@@ -165,13 +165,17 @@ class _SendingMSGState extends State<SendingMSG> {
                           Column(
                             children: [
                               InkWell(
-                            onTap: () => setState(() {
-                              if (selectedSmsTemplate == "$i") {
-                                selectedSmsTemplate = "";
-                              } else {
-                                selectedSmsTemplate = "$i";
-                              }
-                            }),
+                              onTap: () => setState(() {
+                                if(i!=1){
+                                  return;
+                                }
+
+                                if (selectedSmsTemplate == "$i") {
+                                  selectedSmsTemplate = "";
+                                } else {
+                                  selectedSmsTemplate = "$i";
+                                }
+                              }),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
@@ -254,6 +258,10 @@ class _SendingMSGState extends State<SendingMSG> {
                             children: [
                               InkWell(
                             onTap: () => setState(() {
+                              if(i!=1){
+                                  return;
+                                }
+
                               if (selectedEmailTemplate == "$i") {
                                 selectedEmailTemplate = "";
                               } else {
@@ -342,6 +350,10 @@ class _SendingMSGState extends State<SendingMSG> {
                             children: [
                               InkWell(
                             onTap: () => setState(() {
+                              if(i!=1){
+                                  return;
+                                }
+
                               if (selectedVoiceTemplate == "$i") {
                                 selectedVoiceTemplate = "";
                               } else {

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import 'routes/app_routes.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -36,7 +38,8 @@ class MyApp extends StatelessWidget {
             data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
             child: child!);
       },
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: Routes.login,
+      onGenerateRoute: (s) => RouteGenerator(settings: s).getRoute()
     );
   }
 }
