@@ -40,7 +40,7 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
 
       emit(Success());
     }catch(err){
-      emit(Error());
+      emit(Error(error: err.toString()));
     }
   }
 

@@ -22,8 +22,15 @@ class _SendingMSGState extends State<SendingMSG> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    return BlocListener<NetworkBloc, NetworkState>(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: BlocListener<NetworkBloc, NetworkState>(
       listener: (context, state) {
+        if(state is Error){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error))
+          );
+        }
         if(state is Success){
           showModalBottomSheet<void>(
             context: context,
@@ -63,12 +70,13 @@ class _SendingMSGState extends State<SendingMSG> {
                       style: CustomFonts.aloevera28W600(
                         color: HexColor("#654CE1")
                       ),),
-                       Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                      const SizedBox(height: 8,),
+                       Text('${ selectedSmsTemplate.isNotEmpty ? 'Sms - 1': ''} ${ (selectedSmsTemplate.isNotEmpty && selectedVoiceTemplate.isNotEmpty) ? ',': ''} ${selectedVoiceTemplate.isNotEmpty ? 'Voice - 1' : ''} ${(selectedSmsTemplate.isNotEmpty || selectedVoiceTemplate.isNotEmpty) ? 'to ${widget.data["phone"]}' : '' } \n ${ selectedEmailTemplate.isNotEmpty ? 'Email - 1 to ${widget.data["email"]}' : '' }',
                        textAlign: TextAlign.center,
                       style: CustomFonts.aloevera14W400(
                         color: HexColor("#121019").withOpacity(.6)
                       ),),
-                      const SizedBox(height: 16,),
+                      const SizedBox(height: 8,),
                       Image.asset("assets/images/sent.png",
                       height: 120,),
                       const SizedBox(height: 20,),
@@ -120,9 +128,7 @@ class _SendingMSGState extends State<SendingMSG> {
           );
         }
       },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(
+      child: Stack(
           alignment: Alignment.topCenter,
           children: [
             SingleChildScrollView(
@@ -545,13 +551,19 @@ class _SendingMSGState extends State<SendingMSG> {
             Positioned(
               bottom: 20,
               child: MaterialButton(
-                onPressed: () {
-                  context.read<NetworkBloc>().add(SendMessage(
-                      phoneNumber: widget.data["phone"],
-                      email: widget.data["email"],
-                      isCall: selectedVoiceTemplate.isNotEmpty,
-                      isSms: selectedSmsTemplate.isNotEmpty,
-                      isMail: selectedEmailTemplate.isNotEmpty));
+                onPressed: ()async{
+
+                  await showConfirmSheet(context).then(
+                    (value){
+                      if(value){
+                        context.read<NetworkBloc>().add(SendMessage(
+                            phoneNumber: widget.data["phone"],
+                            email: widget.data["email"],
+                            isCall: selectedVoiceTemplate.isNotEmpty,
+                            isSms: selectedSmsTemplate.isNotEmpty,
+                            isMail: selectedEmailTemplate.isNotEmpty));
+                        }
+                    });
                 },
                 height: 60,
                 minWidth: width - 32,
@@ -573,4 +585,108 @@ class _SendingMSGState extends State<SendingMSG> {
       ),
     );
   }
+
+  Future<bool> showConfirmSheet(BuildContext context)async{
+    bool confirmed = false;
+    await showModalBottomSheet<void>(
+      context: context,
+      barrierColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+        )
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          // height: 200,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40),
+            )
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const SizedBox(height: 24,),
+                Container(width: 60, height: 8,
+                decoration: BoxDecoration(
+                  color: HexColor("#F5F5F5"),
+                  borderRadius: BorderRadius.circular(30)
+                ),),
+                const SizedBox(height: 15,),
+                Text('Are you sure to send ?',
+                style: CustomFonts.aloevera28W600(
+                  color: HexColor("#654CE1")
+                ),),
+                const SizedBox(height: 32,),
+                  Text('${ selectedSmsTemplate.isNotEmpty ? 'Sms - 1': ''} ${ (selectedSmsTemplate.isNotEmpty && selectedVoiceTemplate.isNotEmpty) ? ',': ''} ${selectedVoiceTemplate.isNotEmpty ? 'Voice - 1' : ''} ${(selectedSmsTemplate.isNotEmpty || selectedVoiceTemplate.isNotEmpty) ? 'to ${widget.data["phone"]}' : '' } \n ${ selectedEmailTemplate.isNotEmpty ? 'Email - 1 to ${widget.data["email"]}' : '' }',
+                  textAlign: TextAlign.center,
+                style: CustomFonts.zabal16W600(
+                  color: HexColor("#121019").withOpacity(.6)
+                ),),
+                const SizedBox(height: 16,),
+                // Image.asset("assets/images/sent.png",
+                // height: 120,),
+                const SizedBox(height: 20,),
+                Row(
+                  children: [
+                    Expanded(flex: 3,
+                      child: GestureDetector(
+                        onTap: ()=>Navigator.pop(context),
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: HexColor("#F3F1FD"),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: Center(
+                            child: Text("Back",
+                            style: CustomFonts.aloevera16W600(
+                              color: HexColor("#654CE1")
+                            ),),
+                          ),
+                          ),
+                      )),
+                        const SizedBox(width: 8,),
+                        Expanded(flex: 2,
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.pop(context);
+                          confirmed = true;
+                        },
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: HexColor("#654CE1"),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: Center(
+                            child: Text("Yes",
+                            style: CustomFonts.aloevera16W600(
+                              color: HexColor("#FFFFFF")
+                            ),),
+                          ),
+                          ),
+                      )),
+                  ],
+                ),
+                const SizedBox(height: 40,),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    return confirmed;
+  }
+
 }

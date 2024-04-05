@@ -9,4 +9,8 @@ class Loading extends NetworkState {}
 
 class Success extends NetworkState {}
 
-class Error extends NetworkState {}
+class Error extends NetworkState {
+  final String error;
+
+  Error({required this.error});
+}
