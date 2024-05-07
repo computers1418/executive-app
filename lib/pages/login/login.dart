@@ -204,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           var name = nameController.text.trim();
                                           var password = passwordController.text.trim();
 
-                                          if(name!="Doctor" && password!="delhi"){
+                                          if(name!="Doctor" || password!="delhi"){
                                             error.value = true;
                                             return;
                                           }
