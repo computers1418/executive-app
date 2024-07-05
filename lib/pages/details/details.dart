@@ -269,23 +269,26 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ),
                     ),
                     Positioned(top: 30, right: 30,
-                      child: Container(
-                        height: 38, width: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(19),
-                          border: Border.all(color: Colors.white)
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("View Log Book  ",
-                            style: CustomFonts.zabal12W600(
-                              color: Colors.white
-                            ),),
-                            const Icon(Icons.arrow_forward_outlined,
-                            color: Colors.white,
-                            size: 16,)
-                          ],
+                      child: GestureDetector(
+                        onTap: ()=>Navigator.pushNamed(context, Routes.logbook),
+                        child: Container(
+                          height: 38, width: 150,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(19),
+                            border: Border.all(color: Colors.white)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("View Log Book  ",
+                              style: CustomFonts.zabal12W600(
+                                color: Colors.white
+                              ),),
+                              const Icon(Icons.arrow_forward_outlined,
+                              color: Colors.white,
+                              size: 16,)
+                            ],
+                          ),
                         ),
                       ),
                     ),

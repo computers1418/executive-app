@@ -1,6 +1,6 @@
 import 'package:executive_app/constants/text_style.dart';
 import 'package:executive_app/pages/details/details.dart';
-import 'package:executive_app/pages/log-book/log-book.dart';
+import 'package:executive_app/pages/log-book/log_book.dart';
 import 'package:executive_app/pages/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
