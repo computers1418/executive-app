@@ -15,7 +15,7 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
   Future<void> makeCall(String path, receiver)async{
     var dio = Dio();
 
-    dio.options.baseUrl = "http://13.233.56.216/api/executive/";
+    dio.options.baseUrl = "http://13.127.57.197/api/";
     dio.options.contentType = 'application/json'; 
     await dio.post(path, data: {
       "receivers": receiver
@@ -34,7 +34,7 @@ class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
 
       await Future.wait<void>([
         if(event.isSms) makeCall("sms", phoneNumber), 
-        if(event.isCall) makeCall("voiceCall", phoneNumber),
+        if(event.isCall) makeCall("voice-call", phoneNumber),
         if(event.isMail) makeCall("email", email)
       ]);
 
