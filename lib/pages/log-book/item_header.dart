@@ -1,3 +1,5 @@
+import 'package:executive_app/modals/report_data.dart';
+import 'package:executive_app/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/text_style.dart';
@@ -5,7 +7,9 @@ import '../../constants/text_style.dart';
 class ItemHeader extends StatelessWidget {
   final String active;
   final String activeItem;
-  const ItemHeader({super.key, this.active='', this.activeItem = ''});
+  final ReportData data;
+  final ValueChanged onClick;
+  const ItemHeader({super.key, this.active='', this.activeItem = '', required this.data, required this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +29,15 @@ class ItemHeader extends StatelessWidget {
                           fit: BoxFit.fill
                         )
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("SMS", style: CustomFonts.aloevera16W600(color: activeItem=='sms'? const Color(0xFF3376F3): Colors.white)),
-                          Icon(Icons.keyboard_arrow_down_rounded, color: activeItem=='sms'? const Color(0xFF3376F3): Colors.white,)
-                        ],
+                      child: GestureDetector(
+                        onTap: ()=>onClick('sms'),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("SMS", style: CustomFonts.aloevera16W600(color: activeItem=='sms'? const Color(0xFF3376F3): Colors.white)),
+                            Icon(Icons.keyboard_arrow_down_rounded, color: activeItem=='sms'? const Color(0xFF3376F3): Colors.white,)
+                          ],
+                        ),
                       ),
                     )
                   ),
@@ -46,12 +53,15 @@ class ItemHeader extends StatelessWidget {
                           fit: BoxFit.fill
                         )
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Voice", style: CustomFonts.aloevera16W600(color: activeItem=='voice'? const Color(0xFF3376F3): Colors.white)),
-                          Icon(Icons.keyboard_arrow_down_rounded, color: activeItem=='voice'? const Color(0xFF3376F3): Colors.white,)
-                        ],
+                      child: GestureDetector(
+                        onTap: ()=>onClick('voice'),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Voice", style: CustomFonts.aloevera16W600(color: activeItem=='voice'? const Color(0xFF3376F3): Colors.white)),
+                            Icon(Icons.keyboard_arrow_down_rounded, color: activeItem=='voice'? const Color(0xFF3376F3): Colors.white,)
+                          ],
+                        ),
                       ),
                     )
                   ),
@@ -67,13 +77,16 @@ class ItemHeader extends StatelessWidget {
                           fit: BoxFit.fill
                         )
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Email", style: CustomFonts.aloevera16W600(color:
-                            activeItem=='email'? const Color(0xFF3376F3): Colors.white)),
-                          Icon(Icons.keyboard_arrow_down_rounded, color: activeItem=='email'? const Color(0xFF3376F3): Colors.white,)
-                        ],
+                      child: GestureDetector(
+                        onTap: ()=>onClick('email'),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Email", style: CustomFonts.aloevera16W600(color:
+                              activeItem=='email'? const Color(0xFF3376F3): Colors.white)),
+                            Icon(Icons.keyboard_arrow_down_rounded, color: activeItem=='email'? const Color(0xFF3376F3): Colors.white,)
+                          ],
+                        ),
                       ),
                     )
                   ),
@@ -101,7 +114,7 @@ class ItemHeader extends StatelessWidget {
                           child: Row(
                             children: [
                               Image.asset('assets/images/phone.png', width: 12, height: 12,),
-                              Text("+91 90876 54321", style: CustomFonts.aloevera10W600(color: Colors.white))
+                              Text(data.mobileNo, style: CustomFonts.aloevera10W600(color: Colors.white))
                             ],
                           ),
                         ),
@@ -116,7 +129,7 @@ class ItemHeader extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Image.asset('assets/images/calendar.png', width: 12, height: 12,),
-                                  Text("24 Feb", style: CustomFonts.aloevera10W600(color: Colors.white))
+                                  Text(Utils.formatDate(data.deliveryTime), style: CustomFonts.aloevera10W600(color: Colors.white))
                                 ],
                               ),
                             ),
@@ -132,7 +145,7 @@ class ItemHeader extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Image.asset('assets/images/time.png', width: 12, height: 12,),
-                                  Text("10:00 AM", style: CustomFonts.aloevera10W600(color: Colors.white))
+                                  Text(Utils.formatTime(data.deliveryTime), style: CustomFonts.aloevera10W600(color: Colors.white))
                                 ],
                               ),
                             )
@@ -155,15 +168,15 @@ class ItemHeader extends StatelessWidget {
                           child: Row(
                             children: [
                               Image.asset('assets/images/at.png', width: 12, height: 12,),
-                              Text("Charlie99@gmail.com", style: CustomFonts.aloevera10W600(color: Colors.white))
+                              Text("-", style: CustomFonts.aloevera10W600(color: Colors.white))
                             ],
                           ),
                         ),
 
                         Column(
                           children: [
-                            Text("User ID : 12JDWKT993K00", style: CustomFonts.aloevera10W600(color: Colors.white)),
-                            Image.asset('assets/images/underline.png', width: 124,),
+                            Text("User ID : ${data.uuId}", style: CustomFonts.aloevera10W600(color: Colors.white)),
+                            Image.asset('assets/images/underline.png', width: 154,),
                           ],
                         )
                       ],

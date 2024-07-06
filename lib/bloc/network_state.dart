@@ -9,6 +9,11 @@ class Loading extends NetworkState {}
 
 class Success extends NetworkState {}
 
+class ReportsFetched extends NetworkState {
+  final List<ReportData> reports;
+  ReportsFetched({required this.reports});
+}
+
 class Error extends NetworkState {
   final String error;
 

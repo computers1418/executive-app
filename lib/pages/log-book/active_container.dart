@@ -1,14 +1,19 @@
+import 'package:executive_app/modals/report_data.dart';
+import 'package:executive_app/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/text_style.dart';
 
 class ActiveContainer extends StatelessWidget {
   final String image;
-  const ActiveContainer({super.key, required this.image});
+  final bool show;
+  final ReportData data;
+  const ActiveContainer({super.key, required this.image, required this.show, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return show
+    ? Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,12 +32,12 @@ class ActiveContainer extends StatelessWidget {
                         Row(
                           children: [
                             Text("User ID 1 : ", style: CustomFonts.aloevera10W500(color: Colors.black)),
-                            Text("12JDWKT993K00", style: CustomFonts.aloevera10W700(color: Colors.black)),
+                            Text(data.uuId, style: CustomFonts.aloevera10W700(color: Colors.black)),
                           ],
                         ),
                         Row(
                           children: [
-                            Text("24 Feb", style: CustomFonts.aloevera10W700(color: Colors.black)),
+                            Text(Utils.formatDate(data.deliveryTime), style: CustomFonts.aloevera10W700(color: Colors.black)),
                             const SizedBox(width: 6,),
                             Image.asset('assets/images/calendar_color.png', width: 12, height: 12,)
                           ],
@@ -45,12 +50,12 @@ class ActiveContainer extends StatelessWidget {
                         Row(
                           children: [
                             Text("User ID 2 : ", style: CustomFonts.aloevera10W500(color: Colors.black)),
-                            Text("12JDWKT993K00", style: CustomFonts.aloevera10W700(color: Colors.black)),
+                            Text("-", style: CustomFonts.aloevera10W700(color: Colors.black)),
                           ],
                         ),
                         Row(
                           children: [
-                            Text("10.00 AM", style: CustomFonts.aloevera10W700(color: Colors.black)),
+                            Text(Utils.formatTime(data.deliveryTime), style: CustomFonts.aloevera10W700(color: Colors.black)),
                             const SizedBox(width: 6,),
                             Image.asset('assets/images/time_color.png', width: 12, height: 12,)
                           ],
@@ -77,7 +82,7 @@ class ActiveContainer extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Text("Gorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.", style: CustomFonts.aloevera8W600(color: Colors.black.withOpacity(0.5))),
+                  child: Text(data.cause, style: CustomFonts.aloevera8W600(color: Colors.black.withOpacity(0.5))),
                 ),
                 const Icon(Icons.keyboard_arrow_up_rounded, color: Colors.black,)
               ],  
@@ -96,7 +101,7 @@ class ActiveContainer extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Text("Gorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.", style: CustomFonts.aloevera8W600(color: Colors.black.withOpacity(0.5))),
+                  child: Text(data.status, style: CustomFonts.aloevera8W600(color: Colors.black.withOpacity(0.5))),
                 ),
                 const Icon(Icons.keyboard_arrow_up_rounded, color: Colors.black,)
               ],  
@@ -109,7 +114,13 @@ class ActiveContainer extends StatelessWidget {
               Row(
                 children: [
                   Text("Balance : ", style: CustomFonts.aloevera10W500(color: Colors.black.withOpacity(0.5))),
-                  Text("Rs.100", style: CustomFonts.aloevera10W700(color: Colors.black)),
+                  Text("Rs.${data.amount}", style: CustomFonts.aloevera10W700(color: Colors.black)),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Duration : ", style: CustomFonts.aloevera10W500(color: Colors.black.withOpacity(0.5))),
+                  Text("${data.answeredDuration}s", style: CustomFonts.aloevera10W700(color: Colors.black)),
                 ],
               ),
               Container(
@@ -120,8 +131,8 @@ class ActiveContainer extends StatelessWidget {
                 ),
                 child: Row(
                 children: [
-                  Text("Balance : ", style: CustomFonts.aloevera10W500(color: Colors.white)),
-                  Text("Rs.100", style: CustomFonts.aloevera10W700(color: Colors.white)),
+                  Text("Charge : ", style: CustomFonts.aloevera10W500(color: Colors.white)),
+                  Text("-", style: CustomFonts.aloevera10W700(color: Colors.white)),
                 ],
               ),
               )
@@ -140,6 +151,7 @@ class ActiveContainer extends StatelessWidget {
           )
         ],
       ),
-    );
+    )
+    : const SizedBox(height: 200);
   }
 }

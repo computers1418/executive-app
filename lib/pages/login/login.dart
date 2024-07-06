@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive/hive.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({ Key? key }) : super(key: key);
@@ -29,8 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController = TextEditingController();
     autoValidate = ValueNotifier(AutovalidateMode.disabled);
     error = ValueNotifier(false);
+
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -210,6 +214,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           }
 
                                           error.value = false;
+
+                                          var box = Hive.box('app');
+                                          box.put('login', DateTime.now().millisecondsSinceEpoch);
 
                                           Navigator.pushNamedAndRemoveUntil(context, Routes.details, (route) => false);
                                           

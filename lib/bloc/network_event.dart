@@ -13,3 +13,5 @@ class SendMessage extends NetworkEvent {
 
   SendMessage({ required this.phoneNumber, required this.email, required this.isCall, required this.isSms, required this.isMail });
 }
+
+class GetReport extends NetworkEvent {}

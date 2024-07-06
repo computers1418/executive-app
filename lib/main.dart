@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:executive_app/constants/text_style.dart';
 import 'package:executive_app/pages/details/details.dart';
 import 'package:executive_app/pages/log-book/log_book.dart';
@@ -5,15 +7,21 @@ import 'package:executive_app/pages/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'routes/app_routes.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  var path = appDocDir.path;
+  Hive.init(path);
+
   runApp(const MyApp());
 }
 
@@ -23,6 +31,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -37,7 +46,7 @@ class MyApp extends StatelessWidget {
             data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
             child: child!);
       },
-      initialRoute: Routes.login,
+      initialRoute: Routes.splash,
       onGenerateRoute: (s) => RouteGenerator(settings: s).getRoute()
     );
   }

@@ -3,6 +3,7 @@ import 'package:executive_app/pages/details/details.dart';
 import 'package:executive_app/pages/log-book/log_book.dart';
 import 'package:executive_app/pages/login/login.dart';
 import 'package:executive_app/pages/sending_msg/sending_msg.dart';
+import 'package:executive_app/pages/splash/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -11,6 +12,7 @@ class Routes {
   Routes._();
 
   //welcome
+  static const String splash = "/";
   static const String login = "/login";
   static const String details = "/details";
   static const String templates = "/templates";
@@ -26,6 +28,8 @@ class RouteGenerator {
     String routeName = settings.name ?? "";
 
     switch (routeName) {
+      case Routes.splash:
+        return getTransistionPage(const SplashView());
       case Routes.login:
         return getTransistionPage(const LoginScreen());
       case Routes.details:
@@ -36,7 +40,10 @@ class RouteGenerator {
           child: SendingMSG(data: settings.arguments as Map),
         ));
       case Routes.logbook:
-        return getTransistionPage(const LogBook());
+        return getTransistionPage(BlocProvider(
+          create: (context) => NetworkBloc()..add(GetReport()),
+          child: const LogBook(),
+        ));
       default:
         return unDefinedRoute();
     }

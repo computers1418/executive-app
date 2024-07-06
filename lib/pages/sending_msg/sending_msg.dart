@@ -102,7 +102,7 @@ class _SendingMSGState extends State<SendingMSG> {
                               const SizedBox(width: 8,),
                               Expanded(flex: 2,
                             child: GestureDetector(
-                              onTap: ()=>Navigator.pop(context),
+                              onTap: ()=>Navigator.pushNamed(context, Routes.details),
                               child: Container(
                                 height: 60,
                                 decoration: BoxDecoration(
